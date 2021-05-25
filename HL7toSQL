@@ -84,4 +84,3 @@ VALUES (
    ${NHSTraceStatus},
    ${TimeOfMessage});
 END
-
