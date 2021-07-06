@@ -1,5 +1,5 @@
 
-IF exists(SELECT [TrustID] FROM [dbo].[TestMirth] WHERE [TrustID]=${TrustID})
+IF exists(SELECT [TrustID] FROM [HL7].[dbo].[TestMirth] WHERE [TrustID]=${TrustID})
 BEGIN
  UPDATE [HL7].[dbo].[TestMirth]  
 	SET [TrustID] = ${TrustID}
@@ -9,8 +9,11 @@ BEGIN
       ,[Forename1] = ${Forename1}
       ,[Forename2] = ${Forename2}
       ,[Title] = ${Title}
-      ,[DateOfBirth] = ${DateOfBirth}
-      ,[DateOfDeath] = ${DateOfDeath}
+      ,[DateOfBirth] = CAST(LEFT(${DateOfBirth},8) AS DATE)
+      ,[DateOfDeath] =  CASE  
+        			    WHEN ${DateOfDeath} = '' THEN NULL
+                        ELSE CAST(LEFT(${DateOfDeath},8) AS DATE)
+                        END 
       ,[CurrentAddress1] = ${CurrentAddress1}
       ,[CurrentAddress2] = ${CurrentAddress2}
       ,[CurrentAddress3] = ${CurrentAddress3}
@@ -27,11 +30,12 @@ BEGIN
       ,[Email] = ${Email}
       ,[NHSTraceStatus] = ${NHSTraceStatus}
       ,[UpdatedDateTime] = ${TimeOfMessage}
+      ,[DateTime] = GETDATE()
 	WHERE [TrustID]=${TrustID}
 END                  
 ELSE           
 BEGIN 
-INSERT INTO [dbo].[TestMirth]
+INSERT INTO [HL7].[dbo].[TestMirth]
 	([TrustID]
       ,[PASPatientID]
       ,[NHSNumber]
@@ -56,7 +60,8 @@ INSERT INTO [dbo].[TestMirth]
       ,[MobilePhone]
       ,[Email]
       ,[NHSTraceStatus]
-      ,[CreatedDateTime])
+      ,[CreatedDateTime]
+      ,[DateTime])
 VALUES (
    ${TrustID},
    ${PASPatientID},
@@ -65,8 +70,11 @@ VALUES (
    ${Forename1},
    ${Forename2},
    ${Title},
-   ${DateOfBirth},
-   ${DateOfDeath},
+   CAST(LEFT(${DateOfDeath},8) AS DATE),
+   CASE 
+        	 WHEN ${DateOfDeath} = '' THEN NULL 
+           ELSE CAST(LEFT(${DateOfDeath},8) AS DATE)
+           END,
    ${CurrentAddress1},
    ${CurrentAddress2},
    ${CurrentAddress3},
@@ -82,5 +90,8 @@ VALUES (
    ${MobilePhone},
    ${Email},
    ${NHSTraceStatus},
-   ${TimeOfMessage});
+   ${TimeOfMessage},
+   GETDATE());
 END
+
+
