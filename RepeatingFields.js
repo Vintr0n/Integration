@@ -1,13 +1,13 @@
 //Patient ID handler
 for each (pid3 in msg['PID']['PID.3']) {
 	//Added to handle A40s 
-	if (pid3['PID.3.5'].toString() == 'MRN') {
+	if (pid3['PID.3.5'].toString() == 'String1') {
         channelMap.put('TrustID', pid3['PID.3.1'].toString());
     }
-    if (pid3['PID.3.5'].toString() == 'T') {
+    if (pid3['PID.3.5'].toString() == 'SomeString') {
         channelMap.put('TrustID', pid3['PID.3.1'].toString());
     }
-     if (pid3['PID.3.5'].toString() == 'INT') {
+     if (pid3['PID.3.5'].toString() == 'AnotherString') {
         channelMap.put('PASPatientID', pid3['PID.3.1'].toString());
     }
     if (pid3['PID.3.5'].toString() == 'NHS') {
@@ -18,7 +18,7 @@ for each (pid3 in msg['PID']['PID.3']) {
 
 //Home address handler
 for each (pid11 in msg['PID']['PID.11']) {
-    if (pid11['PID.11.7'].toString() == 'H') {
+    if (pid11['PID.11.7'].toString() == 'Letter') {
         channelMap.put('CurrentAddress1', pid11['PID.11.1'].toString());
         channelMap.put('CurrentAddress2', pid11['PID.11.2'].toString());
         channelMap.put('CurrentAddress3', pid11['PID.11.3'].toString());
@@ -30,13 +30,13 @@ for each (pid11 in msg['PID']['PID.11']) {
 
 //Telephones and email handler
 for each (pid13 in msg['PID']['PID.13']) {
-    if (pid13['PID.13.3'].toString() == 'PH' &  pid13['PID.13.2'].toString() == 'PRN') {
+    if (pid13['PID.13.3'].toString() == 'String1' &  pid13['PID.13.2'].toString() == 'String2') {
         channelMap.put('HomePhone', pid13['PID.13.1'].toString());
     }
-    if (pid13['PID.13.3'].toString() == 'CP') {
+    if (pid13['PID.13.3'].toString() == 'String3') {
         channelMap.put('MobilePhone', pid13['PID.13.1'].toString());
     }
-    if (pid13['PID.13.2'].toString() == 'NET') {
+    if (pid13['PID.13.2'].toString() == 'String4') {
         channelMap.put('Email', pid13['PID.13.4'].toString());
     }
 }
