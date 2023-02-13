@@ -1,5 +1,5 @@
 var output = <HL7Message/>;
-var RandomTnumber = Math.floor(Math.random() * (5999999 - 5700001 + 1)) + 5700001;
+var RandomMRNnumber = Math.floor(Math.random() * (5999999 - 5700001 + 1)) + 5700001;
 var RandomNHSNumber = Math.floor(Math.random() * (1000000000 - 9776671683 + 1)) + 9776671683;
 var RandomHomeNumber = Math.floor(Math.random() * (1912098899 - 1912001219 + 1)) + 1912001219;
 var RandomMobileNumber = Math.floor(Math.random() * (7991234567 - 7001234567 + 1)) + 7001234567;
@@ -48,7 +48,7 @@ if (msg['MSH'][0]){
 if (msg['PID'][0]){
     output.PID['PID.1'] = msg['PID']['PID.1'];
     output.PID['PID.2'] = msg['PID']['PID.2'];
-    output.PID['PID.2']['PID.2.1'] = 'T'+RandomTnumber;
+    output.PID['PID.2']['PID.2.1'] = 'T'+RandomMRNnumber;
     output.PID['PID.3'] = msg['PID']['PID.3'];
     
 var PID3Array = [];
@@ -56,7 +56,7 @@ var PID3Array = [];
 for each (pid3 in msg['PID']['PID.3']) {
 
      if (pid3['PID.3.5'].toString() == 'INT') {
-        output.PID['PID.3'][i]['PID.3.1'] = '0'+RandomTnumber;
+        output.PID['PID.3'][i]['PID.3.1'] = '0'+RandomMRNnumber;
         i++;
     }	
     if (pid3['PID.3.5'].toString() == 'NHS') {
@@ -70,8 +70,8 @@ for each (pid3 in msg['PID']['PID.3']) {
     if (pid3['PID.3.5'].toString() == 'N') {
     		i++;
     }
-     if (pid3['PID.3.5'].toString() == 'T') {
-    	   output.PID['PID.3'][i]['PID.3.1'] = 'T'+RandomTnumber;
+     if (pid3['PID.3.5'].toString() == 'MRN') {
+    	   output.PID['PID.3'][i]['PID.3.1'] = 'T'+RandomMRNnumber;
     	   i++;
     }
 }
